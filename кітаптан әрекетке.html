@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#143e32">
+<meta name="description" content="5-сынып оқырман клубына арналған кітаптан нақты әрекетке өтетін офлайнға бейім интерактивті құрал.">
+<title>Кітаптан әрекетке — оқырман клубы</title>
+<style>
+:root{--ink:#192b25;--muted:#5b6f65;--paper:#f7f4ec;--white:#fffefa;--green:#164636;--green2:#28634d;--lime:#d9e9cb;--ochre:#edbb68;--terra:#bd6148;--line:#d9dfd5;--shadow:0 10px 30px rgba(23,54,42,.08);font-family:Arial,"Noto Sans",sans-serif;color:var(--ink);font-size:16px}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);line-height:1.55}button,input,select,textarea{font:inherit}button{cursor:pointer}
+a{color:var(--green)}.shell{max-width:1120px;margin:0 auto;padding:0 22px}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(247,244,236,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:10px;padding:12px 0;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--green);margin-right:auto}.brand-mark{width:40px;height:40px;border-radius:14px;background:var(--green);display:grid;place-items:center;color:white;font-size:21px}
+.nav button{border:0;background:transparent;color:var(--muted);padding:9px 12px;border-radius:10px;font-weight:700}
+.nav button[aria-current="page"],.nav button:hover{background:var(--lime);color:var(--green)}
+main{padding:28px 0 72px}.hero{background:var(--green);color:#fff;border-radius:28px;padding:40px;display:grid;grid-template-columns:1.25fr .75fr;gap:22px;overflow:hidden;position:relative}
+.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:.76rem;font-weight:800;color:#cfdfc3}.hero h1{font-family:Georgia,serif;font-size:clamp(2.3rem,5vw,4.2rem);line-height:1.04;margin:10px 0 18px;max-width:720px}
+.hero p{font-size:1.12rem;color:#e5eee7;max-width:620px;margin:0 0 24px}.hero-art{align-self:center;text-align:center;font-size:clamp(6rem,14vw,11rem);line-height:1;filter:drop-shadow(0 8px 16px rgba(0,0,0,.16))}
+.button{border:0;border-radius:12px;padding:12px 17px;font-weight:800;background:var(--ochre);color:#34230d;box-shadow:0 4px 0 #bf8f43}
+.button.secondary{background:var(--white);color:var(--green);box-shadow:none;border:1px solid var(--line)}
+.button.green{background:var(--green2);color:#fff;box-shadow:none}
+.button.small{padding:8px 11px;font-size:.9rem}
+.hero .button{background:#f4c978}.hero .button.secondary{background:transparent;color:white;border-color:#789186}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:34px 0 14px}
+h2{font-family:Georgia,serif;color:var(--green);font-size:1.7rem;margin:0}h3{margin:0 0 8px;color:var(--green)}
+.lead{margin:6px 0 0;color:var(--muted)}
+.grid{display:grid;gap:16px}.grid.three{grid-template-columns:repeat(3,1fr)}.grid.two{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
+.card .icon{font-size:1.65rem;margin-bottom:10px}.card p{color:var(--muted);margin:6px 0}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:12px}.stat strong{display:block;font-size:1.35rem}.stat span{font-size:.86rem;color:#e0ece5}
+.path{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+.path-step{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:14px;min-height:118px}
+.path-step b{display:block;color:var(--green);font-size:1rem;margin:5px 0}.path-step span{font-size:.83rem;color:var(--muted)}
+.tag{display:inline-flex;align-items:center;padding:5px 10px;border-radius:100px;background:#edf3e8;color:#315d49;font-size:.82rem;font-weight:700;margin:2px}
+.page{display:none}.page.active{display:block}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}
+label{font-weight:700;color:var(--green);font-size:.93rem}
+input,select,textarea{border:1px solid #cbd5cb;border-radius:10px;padding:11px 12px;background:#fff;color:var(--ink);width:100%}
+textarea{min-height:90px;resize:vertical}
+.hint{color:var(--muted);font-size:.85rem;margin:2px 0 0}
+.action-list{display:grid;gap:9px;margin:12px 0}
+.action-choice{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;background:#f5f7f2;border:1px solid var(--line);border-radius:12px}
+.action-choice input{width:auto;margin-top:5px}
+.notice{padding:12px 14px;border-left:4px solid var(--ochre);background:#fff8e9;border-radius:0 10px 10px 0;color:#4f4634;margin:14px 0}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.item{border:1px solid var(--line);border-radius:13px;padding:14px;margin:10px 0;background:#fff}
+.item-head{display:flex;justify-content:space-between;gap:12px;align-items:start}
+.item p{margin:6px 0;color:#4e6057}
+.empty{padding:22px;border:1px dashed #b8c7b8;border-radius:14px;color:var(--muted);text-align:center;background:rgba(255,255,255,.45)}
+.rubric{width:100%;border-collapse:collapse;margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.rubric th,.rubric td{padding:11px 12px;border:1px solid var(--line);text-align:left;vertical-align:top}
+.rubric th{background:var(--green);color:white}.rubric td:first-child{font-weight:700}
+.small-note{font-size:.83rem;color:var(--muted)}
+footer{padding:28px 0;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+.pill{display:inline-block;border-radius:999px;padding:4px 9px;background:#f7ead1;color:#6e4b19;font-size:.78rem;font-weight:800}
+.mobile-only{display:none}
+:focus-visible{outline:3px solid #df9f3e;outline-offset:2px}
+body.high-contrast{--ink:#000;--muted:#24332b;--paper:#fff;--white:#fff;--green:#002d1c;--green2:#00492d;--line:#707d73}
+body.large-text{font-size:19px}
+@media(max-width:760px){.shell{padding:0 15px}.nav{gap:3px}.nav button{padding:8px 9px;font-size:.86rem}.brand{width:100%;margin-bottom:4px}.hero{grid-template-columns:1fr;padding:28px 22px}.hero-art{display:none}.grid.three,.grid.two,.path,.stat-row{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.section-head{align-items:start;flex-direction:column}.rubric{font-size:.82rem}.rubric th,.rubric td{padding:8px 7px}}
+@media print{.topbar,.toolbar,.button,.nav{display:none!important}body{background:#fff}.shell{max-width:none;padding:0}.page{display:block!important}.card,.hero{box-shadow:none;break-inside:avoid}.hero{background:#fff;color:#000;border:1px solid #555}.hero p,.hero .eyebrow{color:#222}main{padding:0}.page:not(#home){break-before:page}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="shell nav" role="navigation" aria-label="Негізгі мәзір">
+  <div class="brand"><span class="brand-mark" aria-hidden="true">К</span><span>Кітаптан әрекетке</span></div>
+  <button data-page="home" aria-current="page">Басты бет</button>
+  <button data-page="planner">Әрекет жоспары</button>
+  <button data-page="journal">Оқырман күнделігі</button>
+  <button data-page="missions">Ізгілік миссиясы</button>
+  <button data-page="rubric">Бағалау</button>
+  <button data-page="guide">Мұғалімге</button>
+</div></header>
+<main class="shell">
+<section class="page active" id="home">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">5-сыныпқа арналған сыныптан тыс оқырман клубы</div>
+      <h1>Кітаптан әрекетке</h1>
+      <p>Оқылған шығармадағы бір құндылықты байқап, оны күнделікті өмірдегі шағын әрі қауіпсіз іске айналдырамыз.</p>
+      <div class="toolbar"><button class="button" data-page="planner">Әрекет жоспарын бастау</button><button class="button secondary" data-page="guide">Қадамдарды көру</button></div>
+      <div class="stat-row">
+        <div class="stat"><strong id="planCount">0</strong><span>сақталған жоспар</span></div>
+        <div class="stat"><strong id="reflectionCount">0</strong><span>рефлексия жазбасы</span></div>
+        <div class="stat"><strong id="valueCount">0</strong><span>қолданылған құндылық</span></div>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">📖 → 🌱</div>
+  </div>
+  <div class="section-head"><div><h2>Клубтың жұмыс жолы</h2><p class="lead">Әр қадам оқушыға мәтіннен дәлел тауып, өз ойын әрекетпен байланыстыруға көмектеседі.</p></div><span class="pill">Нақты нәтиже тіркелмейінше қорытынды жасалмайды</span></div>
+  <div class="path">
+    <div class="path-step"><span>01 · ОҚУ</span><b>Шығарманы таңдау</b><span>Жасқа сай мәтін мен қолжетімді оқу форматын таңдаңыз.</span></div>
+    <div class="path-step"><span>02 · ТҮСІНУ</span><b>Құндылықты атау</b><span>Кейіпкер әрекетінен мысал келтіріп, өз түсінігін айтады.</span></div>
+    <div class="path-step"><span>03 · ӘРЕКЕТ</span><b>Шағын қадам жоспарлау</b><span>Өлшенетін, қауіпсіз және өз еркімен орындалатын іс таңдалады.</span></div>
+    <div class="path-step"><span>04 · ОЙ ЕЛЕГІ</span><b>Рефлексия жасау</b><span>Не болғанын, не үйренгенін және келесі қадамды жазады.</span></div>
+  </div>
+  <div class="section-head"><div><h2>Құндылық бағыттары</h2><p class="lead">Мектептің тәрбие жоспарына қарай мұғалім құндылықты өзгерте алады.</p></div></div>
+  <div class="card">
+    <span class="tag">Әділдік және жауапкершілік</span><span class="tag">Бірлік және ынтымақ</span><span class="tag">Еңбекқорлық</span><span class="tag">Адалдық</span><span class="tag">Қамқорлық</span><span class="tag">Табиғатты аялау</span><span class="tag">Жасампаздық</span>
+    <div class="notice">Әрекет ешкімді ұялтпайды, мәжбүрлемейді және қауіп төндірмейді. Оқушы жеке жағдайын көпшілікке айтуға міндетті емес.</div>
+  </div>
+</section>
+
+<section class="page" id="planner">
+  <div class="section-head"><div><h2>Әрекет жоспары</h2><p class="lead">Шығармадан бір көріністі таңдаңыз да, құндылықты шағын іске айналдырыңыз.</p></div></div>
+  <div class="grid two">
+    <div class="card">
+      <h3>1. Мәтіннен бастаңыз</h3>
+      <div class="form-grid">
+        <div class="field full"><label for="book">Шығарма атауы</label><input id="book" placeholder="Мысалы: мұғалім таңдаған әңгіме" maxlength="120"></div>
+        <div class="field full"><label for="scene">Кейіпкердің әрекеті немесе оқиға (қысқаша өз сөзіңізбен)</label><textarea id="scene" placeholder="Ұзақ дәйексөз көшірмеңіз. Оқиғаны бір-екі сөйлеммен еске түсіріңіз." maxlength="320"></textarea><p class="hint">Мақсаты — мәтінге сүйену; кітап мәтінін көшіріп енгізудің қажеті жоқ.</p></div>
+        <div class="field full"><label for="value">Байқалған құндылық</label><select id="value"><option>Әділдік және жауапкершілік</option><option>Бірлік және ынтымақ</option><option>Еңбекқорлық</option><option>Адалдық</option><option>Қамқорлық</option><option>Табиғатты аялау</option><option>Жасампаздық</option></select></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>2. Іске асатын қадам таңдаңыз</h3>
+      <p class="small-note">Әрекет оқушының ерікті таңдауы болсын. Ұсыныстарды сыныптың қауіпсіздік ережесіне бейімдеңіз.</p>
+      <div id="actionChoices" class="action-list"></div>
+      <div class="field"><label for="customAction">Немесе өз әрекетіңізді жазыңыз</label><input id="customAction" placeholder="Мысалы: жұптағы досымның ойын бөлмей тыңдаймын" maxlength="180"></div>
+      <div class="form-grid" style="margin-top:12px">
+        <div class="field"><label for="when">Қай кезде орындаймын?</label><input id="when" placeholder="Келесі аптада"></div>
+        <div class="field"><label for="signal">Орындалғанын қалай байқаймын?</label><input id="signal" placeholder="Бір рет тыңдап, нақты кері байланыс беремін"></div>
+      </div>
+      <div class="toolbar"><button class="button green" id="savePlan">Жоспарды сақтау</button><button class="button secondary" id="clearPlan">Тазалау</button></div>
+    </div>
+  </div>
+  <div class="section-head"><div><h2>Сақталған жоспарлар</h2><p class="lead">Жазбалар осы құрылғының браузерінде ғана сақталады.</p></div></div>
+  <div id="plans"></div>
+</section>
+
+<section class="page" id="journal">
+  <div class="section-head"><div><h2>Оқырман күнделігі</h2><p class="lead">Әрекеттен кейін өз байқауыңызды белгілеңіз. Міндетті түрде «бәрі сәтті болды» деп жазудың қажеті жоқ.</p></div></div>
+  <div class="card">
+    <div class="form-grid">
+      <div class="field"><label for="reflectionPlan">Қай жоспар бойынша?</label><select id="reflectionPlan"><option value="">Жоспарды таңдаңыз</option></select></div>
+      <div class="field"><label for="feeling">Әрекеттен кейінгі көңіл күй</label><select id="feeling"><option>Жақсы</option><option>Сабырлы</option><option>Қиындау болды</option><option>Әлі аяқталған жоқ</option></select></div>
+      <div class="field full"><label for="whatHappened">Не істедім немесе неге үлгермедім?</label><textarea id="whatHappened" maxlength="280" placeholder="Болғанын қысқа әрі шынайы жазыңыз."></textarea></div>
+      <div class="field"><label for="learned">Не үйрендім?</label><input id="learned" maxlength="180"></div>
+      <div class="field"><label for="nextStep">Келесі қадамым</label><input id="nextStep" maxlength="180"></div>
+    </div>
+    <div class="toolbar"><button class="button green" id="saveReflection">Рефлексияны сақтау</button></div>
+  </div>
+  <div class="section-head"><div><h2>Күнделік жазбалары</h2></div></div><div id="reflections"></div>
+</section>
+
+<section class="page" id="rubric">
+  <div class="section-head"><div><h2>Бағалау және өзіндік тексеру</h2><p class="lead">Бағалау оқушыны салыстыру үшін емес, келесі қадамын жоспарлау үшін қолданылады.</p></div></div>
+  <div class="notice"><b>Қолдану тәртібі:</b> әр өлшем бойынша 1–3 деңгей таңдаңыз. Бұл сынып ішіндегі қалыптастырушы кері байланыс құралы; фестивальдің ресми бағалау парағы емес.</div>
+  <div class="card">
+    <table class="rubric">
+      <thead><tr><th>Өлшем</th><th>1 · Қолдау қажет</th><th>2 · Жетекшілікпен</th><th>3 · Өздігінен</th><th>Деңгей</th></tr></thead>
+      <tbody>
+       <tr><td>Мәтінге сүйену</td><td>Оқиғаны еске түсіруге көмек керек.</td><td>Көріністі атайды, дәлелін нақтылауға сұрақ қажет.</td><td>Тиісті көріністі өз сөзімен түсіндіреді.</td><td><select class="score" data-key="text"><option value="">—</option><option>1</option><option>2</option><option>3</option></select></td></tr>
+       <tr><td>Құндылықты түсіндіру</td><td>Құндылық атауын таңдауда көмек керек.</td><td>Құндылықты атайды, байланысын жартылай түсіндіреді.</td><td>Кейіпкер әрекетімен байланыстырып түсіндіреді.</td><td><select class="score" data-key="value"><option value="">—</option><option>1</option><option>2</option><option>3</option></select></td></tr>
+       <tr><td>Әрекетті жоспарлау</td><td>Қадам тым жалпы не орындалуы қиын.</td><td>Қадам нақты, бірақ мерзім/белгісін нақтылау керек.</td><td>Қауіпсіз, ерікті және байқалатын қадам ұсынады.</td><td><select class="score" data-key="action"><option value="">—</option><option>1</option><option>2</option><option>3</option></select></td></tr>
+       <tr><td>Рефлексия</td><td>Болған жағдайды сипаттауға сұрақ керек.</td><td>Не болғанын айтады, келесі қадам көмегімен анықталады.</td><td>Нәтижені шынайы бағалап, келесі қадамын ұсынады.</td><td><select class="score" data-key="reflection"><option value="">—</option><option>1</option><option>2</option><option>3</option></select></td></tr>
+       <tr><td>Тыңдау және құрмет</td><td>Сөйлесу ережесін еске салу қажет.</td><td>Көп жағдайда сақтайды, кейде қолдау қажет.</td><td>Өзгенің ойын бөлмей тыңдайды, пікір айырмасын құрметтейді.</td><td><select class="score" data-key="respect"><option value="">—</option><option>1</option><option>2</option><option>3</option></select></td></tr>
+      </tbody>
+    </table>
+    <p><b>Өзіндік балл:</b> <span id="scoreTotal">0</span> / 15 <span class="small-note">(толтырылмаған өлшемдер есепке қосылмайды)</span></p>
+  </div>
+  <div class="section-head"><div><h2>Деректермен жұмыс</h2><p class="lead">Сақталған материалдың көшірмесін алыңыз немесе осы құрылғыдан өшіріңіз.</p></div></div>
+  <div class="card"><div class="toolbar"><button class="button secondary" id="exportData">JSON көшірмесін жүктеу</button><button class="button secondary" id="printPage">Басып шығару</button><button class="button" id="deleteData">Осы құрылғыдағы жазбаларды өшіру</button></div><p class="small-note">Өнім серверге дерек жібермейді. Браузердің жергілікті сақтау орнын өшірсеңіз, сақталған жазбалар да жойылады.</p></div>
+</section>
+
+
+<section class="page" id="missions">
+  <div class="section-head"><div><h2>🌱 Үзілістегі ізгілік миссиясы</h2><p class="lead">Қысқа жағдайды оқы, өз таңдауыңды жаса және күнделікті өмірде қолдануға болатын ізгі әрекетті ойлан. Уақыты: 3–5 минут.</p></div><span class="pill">5-сыныпқа арналған ойын</span></div>
+  <div class="grid two">
+    <div class="card">
+      <span class="tag" id="missionNumber">1-миссия</span>
+      <h3 id="missionTitle">Жаңа оқушы</h3>
+      <p id="missionScenario">Қоңырау кезінде сыныпқа жаңа оқушы келді. Ол ешкімді танымайды және жалғыз тұр. Сен не істер едің?</p>
+      <div id="missionChoices" class="action-list"></div>
+      <div class="toolbar"><button class="button green" id="checkMission">Жауабымды тексеру</button><button class="button secondary" id="nextMission">Келесі миссия →</button></div>
+      <div id="missionFeedback" class="notice" role="status" aria-live="polite">Бір жауапты таңда да, тексеру батырмасын бас.</div>
+    </div>
+    <div class="card">
+      <h3>Бүгінгі ізгі қадамым</h3>
+      <p>Ойыннан кейін өзің орындай алатын қауіпсіз әрі шағын әрекетті таңда.</p>
+      <div class="action-list">
+        <label class="action-choice"><input type="checkbox"> Сыныптасымның сөзін бөлмей тыңдаймын.</label>
+        <label class="action-choice"><input type="checkbox"> Біреуге сыпайы түрде көмек ұсынамын.</label>
+        <label class="action-choice"><input type="checkbox"> Ортақ затты орнына қоямын.</label>
+        <label class="action-choice"><input type="checkbox"> Жаңа оқушымен амандасамын.</label>
+      </div>
+      <div class="notice">Есіңде болсын: ізгі әрекет ерікті, қауіпсіз және ешкімді ұялтпайтын болуы керек. Ойын ұпай үшін емес, жақсы шешім ойлау үшін жасалған.</div>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="guide">
+  <div class="section-head"><div><h2>Мұғалімге арналған қысқа нұсқаулық</h2><p class="lead">Ұсынылатын 8 апталық циклді сыныптың кестесі мен кітапхана қорына сай өзгертуге болады.</p></div></div>
+  <div class="grid two">
+   <div class="card"><h3>Кездесу үлгісі · 35–40 минут</h3>
+    <ol><li><b>Жылы бастау · 3 минут.</b> Бүгінгі сұрақты және пікір алмасу ережесін еске түсіру.</li><li><b>Мәтінді еске түсіру · 7 минут.</b> Оқушы таңдалған көріністі өз сөзімен айтады.</li><li><b>Талқылау · 10 минут.</b> Кейіпкер не істеді? Басқа қандай жолы бар еді? Қай тұс дәлел болады?</li><li><b>Әрекет жоспары · 10 минут.</b> Оқушы өз еркімен шағын қауіпсіз қадам мен мерзімді белгілейді.</li><li><b>Рефлексия · 5 минут.</b> «Не байқадым? Келесіде нені өзгертемін?» сұрақтарына жауап береді.</li></ol>
+   </div>
+   <div class="card"><h3>8 апталық апробация жоспары</h3>
+    <ol><li>1-апта: бастапқы сұхбат/оқуға қызығуды қысқа өзіндік бағалау.</li><li>2-апта: клуб ережесі мен кітап таңдау.</li><li>3-апта: мәтінді оқу және маңызды көріністі белгілеу.</li><li>4-апта: құндылықты атау және мәтінге сүйеніп түсіндіру.</li><li>5-апта: әрекет нұсқаларын ұсыну және қауіпсіздігін тексеру.</li><li>6-апта: ерікті түрде әрекет ету; ешкімді фотоға түсіру міндеттелмейді.</li><li>7-апта: рефлексия, жұптық тыңдау және қолдау.</li><li>8-апта: бастапқы және соңғы өзіндік бағалауды салыстырып, қорытындылау.</li></ol>
+    <p class="small-note">Бұл — ұсынылатын жоспар. Апробация өткізілгенін білдірмейді.</p>
+   </div>
+   <div class="card"><h3>Саралау</h3><ul><li><b>Қолдау:</b> қысқа мәтін, сурет/аудио қолдау, сөйлем бастамалары, жұппен айту.</li><li><b>Негізгі деңгей:</b> оқиға мен құндылық арасындағы байланысты дәлелдеу, шағын әрекет жоспары.</li><li><b>Кеңейту:</b> кейіпкердің басқа таңдауын салыстыру, әрекет әсерін бақылаудың қарапайым белгісін ұсыну.</li></ul></div>
+   <div class="card"><h3>Қауіпсіздік пен инклюзия</h3><ul><li>Оқушының отбасы, денсаулығы немесе жеке өмірі туралы ақпарат жинамаңыз.</li><li>Ізгі әрекетті көрсету үшін ақша жұмсау, қауіпті орынға бару немесе бейтаныс адаммен байланысу талап етілмейді.</li><li>Жеке оқуды, тыңдалымды, мәтінді ірі қаріппен беруді және ауызша жауапты балама ретінде ұсыныңыз.</li><li>Қателескен оқушыны жария түрде рейтингке қоспаңыз.</li></ul></div>
+  </div>
+  <div class="section-head"><div><h2>Тиімділікті қалай өлшеуге болады?</h2><p class="lead">Төмендегі деректер жоба басталғанға дейін бос қалады; толтырылған кезде ғана қорытынды жасауға болады.</p></div></div>
+  <div class="card"><ul><li>Оқушы өз оқуына қызығуын 1–5 шкаласында өзі белгілейді (бастапқы және соңғы өлшем).</li><li>Мәтіннен дәлел табу, құндылықты түсіндіру, әрекет жоспары және рефлексия бойынша рубрика толтырылады.</li><li>Сынып бойынша тек жиынтық сан есептеледі; аты-жөндер мен жеке жазбалар есепке көшірілмейді.</li><li>Қорытындыда қатысқан оқушылар санын, өткізу мерзімін, құралдарды және шектеулерді жазыңыз.</li></ul></div>
+  <div class="notice">Бұл сайттағы жазбалар демо емес, нақты сынып нәтижесі ретінде автоматты жарияланбайды. Әр сынып өз құрылғысындағы деректі ғана көреді.</div>
+</section>
+</main>
+<footer><div class="shell">«Кітаптан әрекетке» · 5-сынып оқырман клубының цифрлық жұмыс құралы · Авторлық әдістемелік өнім</div></footer>
+<script>
+(function(){
+ const STORE="kitaptan-areketke-v1";
+ const initial={plans:[],reflections:[],scores:{}};
+ let state=load();
+ const ideas={
+  "Әділдік және жауапкершілік":["Топтық жұмыста өз міндетімді уақытында орындаймын.","Ортақ затты алған орнына қайта қоямын.","Кезек пен ортақ ережені сақтап, себебін түсіндіремін."],
+  "Бірлік және ынтымақ":["Жұптағы серігімнің ойын бөлмей тыңдаймын.","Топтағы бір адамға тапсырманы түсінуге көмектесемін.","Ортақ жұмыста әр адамның пікірін бір рет сұраймын."],
+  "Еңбекқорлық":["Бастаған тапсырмамды шағын қадамдарға бөліп аяқтаймын.","Кітап оқу уақытын күнтізбеге белгілеп, орындағанымды тексеремін.","Қиын тапсырманы бірден тастамай, көмек сұрап жалғастырамын."],
+  "Адалдық":["Қателессем, оны жасырудың орнына түзету жолын ұсынамын.","Өзім орындаған және көмек алған бөлікті ашық айтамын.","Дерек не ойдың қайдан алынғанын көрсетемін."],
+  "Қамқорлық":["Сыныптасыма не қажет екенін сұрап, жауабын тыңдаймын.","Сыныптағы ортақ кітап сөресін реттеуге көмектесемін.","Жаңа оқушыға мектептегі бір ережені түсіндіремін."],
+  "Табиғатты аялау":["Кітапханадағы қағазды ұқыпты пайдаланамын.","Сыныптағы бір өсімдікке жауапты күтім көрсетемін.","Қоқысты мектеп ережесіне сай сұрыптауға көмектесемін."],
+  "Жасампаздық":["Шығармадағы мәселені шешудің басқа жолын суретпен көрсетемін.","Кітапқа байланысты сыныпқа пайдалы шағын белгі не нұсқаулық жасаймын.","Клуб талқылауына жаңа сұрақ ұсынамын."]
+ };
+ function load(){try{return JSON.parse(localStorage.getItem(STORE))||structuredClone(initial)}catch(e){return JSON.parse(JSON.stringify(initial))}}
+ function save(){localStorage.setItem(STORE,JSON.stringify(state));renderAll()}
+ function esc(s){return String(s||"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+ function fmt(d){const dt=new Date(d);const months=["қаңтар","ақпан","наурыз","сәуір","мамыр","маусым","шілде","тамыз","қыркүйек","қазан","қараша","желтоқсан"];return dt.getDate()+" "+months[dt.getMonth()]+" "+dt.getFullYear()+" ж."}
+ function go(id){document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id===id));document.querySelectorAll("[data-page]").forEach(b=>{if(b.tagName==="BUTTON"){if(b.dataset.page===id)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")}});window.scrollTo({top:0,behavior:"smooth"})}
+ document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+ const value=document.getElementById("value");
+ function renderChoices(){const box=document.getElementById("actionChoices");box.innerHTML=(ideas[value.value]||[]).map((a,i)=>'<label class="action-choice"><input type="radio" name="actionIdea" value="'+esc(a)+'"><span>'+esc(a)+'</span></label>').join("")}
+ value.addEventListener("change",renderChoices);
+ function savePlan(){
+  const book=document.getElementById("book").value.trim();
+  const scene=document.getElementById("scene").value.trim();
+  const custom=document.getElementById("customAction").value.trim();
+  const chosen=document.querySelector('input[name="actionIdea"]:checked');
+  const action=custom|| (chosen?chosen.value:"");
+  if(!book||!scene||!action){alert("Шығарма атауын, көріністі және нақты әрекетті толтырыңыз.");return}
+  state.plans.unshift({id:Date.now(),book:book,scene:scene,value:value.value,action:action,when:document.getElementById("when").value.trim(),signal:document.getElementById("signal").value.trim(),created:new Date().toISOString()});
+  document.getElementById("scene").value="";document.getElementById("customAction").value="";document.getElementById("when").value="";document.getElementById("signal").value="";
+  save();go("planner")
+ }
+ document.getElementById("savePlan").addEventListener("click",savePlan);
+ document.getElementById("clearPlan").addEventListener("click",()=>{document.getElementById("scene").value="";document.getElementById("customAction").value="";document.getElementById("when").value="";document.getElementById("signal").value=""});
+ function renderPlans(){
+  const el=document.getElementById("plans");
+  if(!state.plans.length){el.innerHTML='<div class="empty">Әзірге жоспар сақталмаған. Бірінші жоспарды жоғарыдағы пішіннен қосыңыз.</div>';return}
+  el.innerHTML=state.plans.map(p=>'<article class="item"><div class="item-head"><div><h3>'+esc(p.book)+' · '+esc(p.value)+'</h3><span class="small-note">'+fmt(p.created)+'</span></div><button class="button secondary small" data-delete-plan="'+p.id+'">Өшіру</button></div><p><b>Мәтіндегі көрініс:</b> '+esc(p.scene)+'</p><p><b>Әрекет:</b> '+esc(p.action)+'</p><p><b>Мерзімі:</b> '+esc(p.when||"көрсетілмеген")+' · <b>Белгісі:</b> '+esc(p.signal||"көрсетілмеген")+'</p></article>').join("");
+  el.querySelectorAll("[data-delete-plan]").forEach(b=>b.addEventListener("click",()=>{state.plans=state.plans.filter(x=>x.id!==Number(b.dataset.deletePlan));save()}))
+ }
+ function renderReflections(){
+  const sel=document.getElementById("reflectionPlan");const old=sel.value;
+  sel.innerHTML='<option value="">Жоспарды таңдаңыз</option>'+state.plans.map(p=>'<option value="'+p.id+'">'+esc(p.book)+" · "+esc(p.value)+'</option>').join("");
+  if(old)sel.value=old;
+  const el=document.getElementById("reflections");
+  if(!state.reflections.length){el.innerHTML='<div class="empty">Рефлексия әлі жоқ. Әрекет орындалған соң немесе өзгерту қажет болғанда жазыңыз.</div>';return}
+  el.innerHTML=state.reflections.map(r=>'<article class="item"><div class="item-head"><h3>'+esc(r.book)+' · '+esc(r.feeling)+'</h3><span class="small-note">'+fmt(r.created)+'</span></div><p><b>Не болды:</b> '+esc(r.happened)+'</p><p><b>Не үйрендім:</b> '+esc(r.learned)+'</p><p><b>Келесі қадам:</b> '+esc(r.next)+'</p></article>').join("")
+ }
+ document.getElementById("saveReflection").addEventListener("click",function(){
+  const id=Number(document.getElementById("reflectionPlan").value);const plan=state.plans.find(x=>x.id===id);const happened=document.getElementById("whatHappened").value.trim();
+  if(!plan||!happened){alert("Жоспарды таңдап, не болғанын қысқаша жазыңыз.");return}
+  state.reflections.unshift({id:Date.now(),planId:id,book:plan.book,feeling:document.getElementById("feeling").value,happened:happened,learned:document.getElementById("learned").value.trim(),next:document.getElementById("nextStep").value.trim(),created:new Date().toISOString()});
+  document.getElementById("whatHappened").value="";document.getElementById("learned").value="";document.getElementById("nextStep").value="";
+  save()
+ });
+ document.querySelectorAll(".score").forEach(s=>{s.addEventListener("change",()=>{state.scores[s.dataset.key]=s.value;saveScores()})});
+ function saveScores(){localStorage.setItem(STORE,JSON.stringify(state));updateScore()}
+ function updateScore(){let total=0;document.querySelectorAll(".score").forEach(s=>{s.value=state.scores[s.dataset.key]||"";total+=Number(s.value)||0});document.getElementById("scoreTotal").textContent=total}
+ document.getElementById("exportData").addEventListener("click",function(){const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="kitaptan-areketke-jazbalar.json";a.click();URL.revokeObjectURL(a.href)});
+ document.getElementById("printPage").addEventListener("click",()=>window.print());
+ document.getElementById("deleteData").addEventListener("click",function(){if(confirm("Осы браузердегі жоспарлар, рефлексиялар және бағалау жазбалары өшірілсін бе?")){state=JSON.parse(JSON.stringify(initial));save()}});
+ function renderAll(){document.getElementById("planCount").textContent=state.plans.length;document.getElementById("reflectionCount").textContent=state.reflections.length;document.getElementById("valueCount").textContent=new Set(state.plans.map(p=>p.value)).size;renderPlans();renderReflections();updateScore()}
+ renderChoices();renderAll();
+ document.getElementById("contrast")?.addEventListener("click",()=>document.body.classList.toggle("high-contrast"));
+})();
+</script>
+<div style="position:fixed;right:12px;bottom:12px;display:flex;gap:6px;z-index:8">
+<button class="button secondary small" id="contrast" aria-label="Контрастты ауыстыру">Контраст</button>
+<button class="button secondary small" id="textSize" aria-label="Қаріпті үлкейту">A+</button>
+</div>
+<script>document.getElementById("textSize").addEventListener("click",function(){document.body.classList.toggle("large-text")});document.getElementById("contrast").addEventListener("click",function(){document.body.classList.toggle("high-contrast")});</script>
+
+<script>
+(function(){
+ const missions=[
+  {title:'Жаңа оқушы',scenario:'Қоңырау кезінде сыныпқа жаңа оқушы келді. Ол ешкімді танымайды және жалғыз тұр. Сен не істер едің?',value:'Қамқорлық',choices:['Оны байқамағандай өтіп кетемін.','Сәлемдесіп, мектептегі достарыммен танысуына көмектесемін.','Басқаларға оны мазақтауды ұсынамын.'],correct:1,feedback:'Бұл — қамқорлық пен мейірімділіктің үлгісі. Үзілісте сәлемдесіп, көмектесуді шынайы әрекетке айналдыруға болады.'},
+  {title:'Ортақ кітап',scenario:'Сыныптасың кітапты оқып болып, оны үстелдің үстінде қалдырды. Кітап еденге түсіп кетуі мүмкін. Не істейсің?',value:'Жауапкершілік',choices:['Кітапты алған орнына ұқыпты қоямын.','Оны еденге итеріп жіберемін.','Бұл менің кітабым емес деп кетіп қаламын.'],correct:0,feedback:'Дұрыс! Ортақ затқа ұқыптылықпен қарау — жауапкершілік.'},
+  {title:'Топтық жұмыс',scenario:'Топтық тапсырмада бір оқушының пікірі тыңдалмай қалды. Қандай әрекет дұрыс?',value:'Бірлік және ынтымақ',choices:['Оның ойын айтуына мүмкіндік беремін.','Оның сөзін бөлемін.','Топтан кетуін айтамын.'],correct:0,feedback:'Жарайсың! Әр адамның пікірін тыңдау бірлік пен құрметті көрсетеді.'},
+  {title:'Табылған қарындаш',scenario:'Үзілісте дәлізден біреудің қарындашын тауып алдың. Не істейсің?',value:'Адалдық',choices:['Өзімдікі деп алып қоямын.','Қарындашты мұғалімге немесе иесіне жеткізуге тырысамын.','Оны лақтырып жіберемін.'],correct:1,feedback:'Дұрыс таңдау! Затты иесіне қайтару — адал әрекет.'}
+ ];
+ let current=0, answered=false;
+ const title=document.getElementById('missionTitle'),scenario=document.getElementById('missionScenario'),choices=document.getElementById('missionChoices'),number=document.getElementById('missionNumber'),feedback=document.getElementById('missionFeedback');
+ function render(){const m=missions[current];answered=false;number.textContent=(current+1)+'-миссия · '+m.value;title.textContent=m.title;scenario.textContent=m.scenario;choices.innerHTML=m.choices.map((c,i)=>'<label class="action-choice"><input type="radio" name="missionChoice" value="'+i+'"><span>'+c+'</span></label>').join('');feedback.textContent='Бір жауапты таңда да, тексеру батырмасын бас.';}
+ document.getElementById('checkMission').addEventListener('click',()=>{const selected=document.querySelector('input[name="missionChoice"]:checked');if(!selected){feedback.textContent='Алдымен бір жауапты таңда.';return;}const m=missions[current];if(Number(selected.value)===m.correct){feedback.textContent='Дұрыс таңдау! 🌟 '+m.feedback;}else{feedback.textContent='Тағы ойланып көр. Қай әрекет басқа адамға көмектесіп, құрмет көрсетеді?';}});
+ document.getElementById('nextMission').addEventListener('click',()=>{current=(current+1)%missions.length;render();});
+ render();
+})();
+</script>
+
+</body>
+</html>
